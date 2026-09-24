@@ -1,8 +1,10 @@
 name: Hello GitHub Actions
 on:
-  workflow_dispatch:
   push:
-    branches: [main]
+    branches:
+      - main
+      - feature/*
+  workflow_dispatch:
 jobs:
   hello:
     runs-on: ubuntu-latest
@@ -17,3 +19,9 @@ jobs:
         run: date
       - name: Show operating system
         run: uname -a
+      - name: Use secret
+        env:
+          MY_SECRET: ${{ secrets.MY_SECRET }}
+        run: |
+          echo "Secret is: $MY_SECRET"
+          echo "Secret length: ${#MY_SECRET}"
